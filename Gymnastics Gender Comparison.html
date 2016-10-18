@@ -1,0 +1,3575 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="js/d3.min.js"></script>
+		
+		<title>Gender in Gymnastics</title>
+	</head>
+
+
+
+	<style>
+	
+	#container {
+		width: 500px;
+		margin-top: -20px;
+		margin-left: 30px;
+		margin-right: 30px;}
+	
+	.column {
+		width: 600px;
+		display: inline-block;}
+	
+	.title {
+		font-family: 'Oswald', sans-serif;
+		font-size: 36pt;
+		color: black;
+		letter-spacing: 1px;
+		word-spacing: 1px;
+		text-align: left;}
+	
+	.subtitle {
+		font-family: 'Oswald', sans-serif;
+		font-size: 18pt;
+		color: black;
+		letter-spacing: 1px;
+		word-spacing: 1px;
+		text-align: left;}
+	
+	.text {
+		font-family: 'TW Cen MT Condensed', sans-serif;
+		font-size: 14pt;
+		color: black;
+		letter-spacing: 1px;
+		word-spacing: 1px;
+		text-align: left;}
+	
+	.label {
+		font-family: 'Raleway', sans-serif;
+		font-size: 10pt;
+		width: 200px;
+		color: black;
+		letter-spacing: 1px;
+		word-spacing: 1px;
+		text-align: center;}
+
+	#aly {
+		top: 75px;
+		left: 27px;
+		position: absolute;
+		color: white;		
+		z-index: 2;
+		}
+	
+	#chris {
+		top: 125px;
+		left: 28px;
+		position: absolute;
+		color: white;		
+		z-index: 2;
+		}
+	
+	#laurie {
+		top: 345px;
+		left: 169px;
+		position: absolute;
+		color: white;		
+		z-index: 2;
+		}
+	
+	#alex {
+		top: 305px;
+		left: 171px;
+		position: absolute;
+		color: white;		
+		z-index: 2;
+		}
+	
+	#simone {
+		top: 75px;
+		left: 307px;
+		position: absolute;
+		color: white;
+		z-index: 2;
+		}
+	
+	#sam {
+		top: 125px;
+		left: 307px;
+		position: absolute;
+		color: white;
+		z-index: 2;
+		}
+	
+	#madison {
+		top: 345px;
+		left: 447px;
+		position: absolute;
+		color: white;		
+		z-index: 2;
+		}
+	
+	#danell {
+		top: 305px;
+		left: 447px;
+		position: absolute;
+		color: white;		
+		z-index: 2;
+		}
+
+	#gabby {
+		top: 75px;
+		left: 588px;
+		position: absolute;
+		color: white;		
+		z-index: 2;
+		}
+
+	#jake {
+		top: 125px;
+		left: 588px;
+		position: absolute;
+		color: white;		
+		z-index: 2;
+		}
+
+	#chart {
+		width: 700px; /* width of overall chart area */
+		height: 400px; /* its height */
+		border: solid gray 0px; /* remove this to get rid of gray outlined box */
+		position: absolute; /* keep this */
+		top: 10px; /* change this to move entire chart up/down */
+		left: 670px; /* this to move chart right/left */
+		}
+
+	.bordercircle {
+		width: 250px;
+		height: 250px;
+		border-radius: 100%;
+		border: solid white 4px;
+		position: absolute;
+	}
+	
+	#b_one {
+		top: 30px;
+		left: 0px;
+	}
+
+	#b_two {
+		top: 155px;
+		left: 140px;
+	}
+	
+	#b_three {
+		top: 30px;
+		left: 280px;
+	}
+	#b_four {
+		top: 155px;
+		left: 420px;
+	}
+
+	#b_five {
+		top: 30px;
+		left: 560px;
+		}
+
+
+	.datacircle { /* styles of gray circles that will remained fixed */
+		width:250px;
+		height:250px;
+		border:solid black 1px;
+		background-color: black;
+		border-radius: 100%;
+		-webkit-transform: translateX(-50%) translateY(-50%);
+		position: absolute;
+	}
+
+	#one {
+		top: 159px;
+		left: 129px;
+		background-color: #0099ff;
+		opacity: 0;	
+		-webkit-transition: 1s;	
+	}
+
+	#two {
+		top: 284px;
+		left: 269px;
+		background-color: #ffcc00;
+		opacity: 0;	
+		-webkit-transition: 1s;				
+	}
+	
+	#three {
+		top: 159px;
+		left: 409px;
+		border:solid white 1px;
+		opacity: 0;	
+		-webkit-transition: 1s;				
+	}
+	
+	#four {
+		top: 284px;
+		left: 549px;
+		background-color: #00cc66;
+		opacity: 0;	
+		-webkit-transition: 1s;				
+	}
+	
+	#five {
+		top: 159px;
+		left: 689px;
+		background-color: #ff0000;
+		opacity: 0;	
+		-webkit-transition: 1s;				
+	}
+
+	#six {
+		top: 159px;
+		left: 129px;
+		background-color: #0099ff;
+		opacity: 0;
+   		-webkit-transition: 1s;		
+	}
+
+	#seven {
+		top: 284px;
+		left: 269px;
+		background-color: #ffcc00;
+		opacity: 0;	
+		-webkit-transition: 1s;				
+	}
+	
+	#eight {
+		top: 159px;
+		left: 409px;
+		border:solid white 1px;
+		opacity: 0;	
+		-webkit-transition: 1s;				
+	}
+	
+	#nine {
+		top: 284px;
+		left: 549px;
+		background-color: #00cc66;
+		opacity: 0;
+		-webkit-transition: 1s;					
+	}
+	
+	#ten {
+		top: 159px;
+		left: 689px;
+		background-color: #ff0000;
+		opacity: 0;	
+		-webkit-transition: 1s;				
+	}
+
+	#tooltip { /* CSS styles of tooltip that will be created in line 80 */
+  		position: absolute;
+  		border: solid blue 0px;
+  		width: 300px;
+  		height: 28px;
+  		font-family: 'Raleway', sans-serif; /* typography styles for tooltip */
+ 		margin-top: 135px;
+		margin-left: -11px; 		
+  		text-align: left; /* ditto */
+  		color: black; /* ditto */
+  		opacity: 1;
+  		-webkit-transition: .5s;
+		}
+
+
+	backbutton { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 1534px;
+		height: 50px;
+		border: solid black 1px;
+		background-color: black;
+		text-decoration: none; /* keep this */
+		margin-top: 75px;
+		margin-left: -50px;
+		text-align: center;
+		}
+
+	blue1 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -51px;
+		margin-left: -11px;
+		text-align: center;
+   		-webkit-transition: .5s;			
+		}
+
+	blue1:hover {
+		background-color: #0099ff;
+	}	
+
+	blue2 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1px;
+		text-align: center;
+		}
+	
+	blue2:hover {
+		background-color: #0099ff;	
+		}	
+
+	blue3 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 13px;
+		text-align: center;
+		}
+	
+	blue3:hover {
+		background-color: #0099ff;	
+		}
+
+	yellow1 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 289px;
+		text-align: center;
+		}
+	
+	yellow1:hover {
+		background-color: #ffcc00;	
+		}
+
+	yellow2 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 301px;
+		text-align: center;
+		}
+	
+	yellow2:hover {
+		background-color: #ffcc00;	
+		}
+
+	yellow3 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 313px;
+		text-align: center;
+		}
+	
+	yellow3:hover {
+		background-color: #ffcc00;	
+		}
+
+	yellow4 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 325px;
+		text-align: center;
+		}
+
+	yellow4:hover {
+		background-color: #ffcc00;	
+		}
+
+	green1 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 509px;
+		text-align: center;
+		}
+
+	green1:hover {
+		background-color: #00cc66;	
+		}		
+
+	green2 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 521px;
+		text-align: center;
+		}
+	
+	green2:hover {
+		background-color: #00cc66;	
+		}
+
+	green3 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 533px;
+		text-align: center;
+		}
+	
+	green3:hover {
+		background-color: #00cc66;	
+		}
+
+	red1 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 933px;
+		text-align: center;
+		}
+	
+	red1:hover {
+		background-color: #ff0000;	
+		}
+
+	red2 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 945px;
+		text-align: center;
+		}
+	
+	red2:hover {
+		background-color: #ff0000;	
+		}
+
+	red3 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 957px;
+		text-align: center;
+		}
+	
+	red3:hover {
+		background-color: #ff0000;	
+		}
+
+	red4 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 969px;
+		text-align: center;
+		}
+	
+	red4:hover {
+		background-color: #ff0000;	
+		}
+
+	red5 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 981px;
+		text-align: center;
+		}
+	
+	red5:hover {
+		background-color: #ff0000;	
+		}
+
+	red6 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 993px;
+		text-align: center;
+		}
+	
+	red6:hover {
+		background-color: #ff0000;	
+		}
+
+	red7 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1005px;
+		text-align: center;
+		}
+	
+	red7:hover {
+		background-color: #ff0000;	
+		}
+
+	red8 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1017px;
+		text-align: center;
+		}
+	
+	red8:hover {
+		background-color: #ff0000;	
+		}
+
+	red9 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1029px;
+		text-align: center;
+		}
+	
+	red9:hover {
+		background-color: #ff0000;	
+		}
+
+	red10 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1041px;
+		text-align: center;
+		}	
+	
+	red10:hover {
+		background-color: #ff0000;	
+		}
+
+	red11 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1053px;
+		text-align: center;
+		}	
+	
+	red11:hover {
+		background-color: #ff0000;	
+		}
+	red12 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1065px;
+		text-align: center;
+		}	
+	
+	red12:hover {
+		background-color: #ff0000;	
+		}
+
+	red13 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1077px;
+		text-align: center;
+		}	
+	
+	red13:hover {
+		background-color: #ff0000;	
+		}
+
+	red14 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1089px;
+		text-align: center;
+		}
+	
+	red14:hover {
+		background-color: #ff0000;	
+		}
+
+	red15 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1101px;
+		text-align: center;
+		}
+	
+	red15:hover {
+		background-color: #ff0000;	
+		}
+
+	red16 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1113px;
+		text-align: center;
+		}
+	
+	red16:hover {
+		background-color: #ff0000;	
+		}
+
+	red17 { /* styling of the buttons */
+		display: block; /* keep this */
+		width: 11px;
+		height: 50px;
+		border: solid black 0px;
+		background-color: #666666;
+		text-decoration: none; /* keep this */
+		margin-top: -50px;
+		margin-left: 1125px;
+		text-align: center;
+		}
+	
+	red17:hover {
+		background-color: #ff0000;	
+		}
+
+
+	</style>
+
+
+
+	<body background="http://localhost/Project%201/Project%201/Files/Cheering%20Crowd%20Background.png">
+		
+	<div id="container">
+		
+	<div class ="column">
+
+	<h1 class="title">GIRL POWER</h1>
+
+	<h4 class="subtitle">EXAMINING THE GENDER GAP IN ELITE GYMNASTICS</h4>
+
+	<p class="text"> Every four years, the Olympics brings the otherwise obscure sport of gymnastics into America’s national spotlight.  At this summer’s games in Rio, five young women – Simone Biles, Aly Raisman, Gabby Douglas, Laurie Hernandez, and Madison Kocian – completed the most dominant team performance in US history by winning 9 of 11 possible medals.  In less than three months, they went from virtual unknowns to the beloved “Final Five.”  Yet the US men - Sam Mikulak, Chris Brooks, Jake Dalton, Alex Naddour, and Danell Leyva - were decidedly less popular, despite improving upon their London struggles with three medals overall.  These disparities are illustrated in the adjacent area graphs using Google Trends data.  Click the timeline below to change the date displayed.  So why, in a country where male athletes almost always overshadow the accomplishments of female athletes, does gymnastics see the opposite occur?  Well, it appears there’s only one thing that appeals to an American fanbase which only watches gymnasts three weeks in the summer – winning.</p>
+
+	</div>
+
+	<div id="chart">	
+	
+		<div class="bordercircle" id="b_one"></div>
+
+			<div class="label" id="aly">ALY RAISMAN</div>		
+			
+			<div class="label" id="chris">CHRIS BROOKS</div>				
+
+		<div class="bordercircle" id="b_two"></div>
+
+			<div class="label" id="laurie">LAURIE HERNANDEZ</div>	
+			
+			<div class="label" id="alex">ALEX NADDOUR</div>	
+
+		<div class="bordercircle" id="b_three"></div>
+
+			<div class="label" id="simone">SIMONE BILES</div>	
+			
+			<div class="label" id="sam">SAM MIKULAK</div>
+
+		<div class="bordercircle" id="b_four"></div>
+			
+			<div class="label" id="madison">MADISON KOCIAN</div>			
+
+			<div class="label" id="danell">DANELL LEYVA</div>
+
+		<div class="bordercircle" id="b_five"></div>
+			
+			<div class="label" id="gabby">GABBY DOUGLAS</div>
+
+			<div class="label" id="jake">JAKE DALTON</div>			
+
+		<div class="datacircle" id="one"></div>
+
+		<div class="datacircle" id="two"></div>
+		
+		<div class="datacircle" id="three"></div>
+
+		<div class="datacircle" id="four"></div>
+
+		<div class="datacircle" id="five"></div>					
+		
+		<div class="datacircle" id="six"></div>		
+		
+		<div class="datacircle" id="seven"></div>
+		
+		<div class="datacircle" id="eight"></div>
+
+		<div class="datacircle" id="nine"></div>
+
+		<div class="datacircle" id="ten"></div>
+
+	</div>
+
+	<div id="tooltip"></div> <!-- this is where our tooltip goes -->
+
+	<backbutton id="nodate" href="#"></backbutton>
+
+	<blue1 id="june3" href="#"></blue1> <!-- button 2 -->	
+
+	<blue2 id="june4" href="#"></blue2> <!-- button 2 -->	
+	
+	<blue3 id="june5" href="#"></blue3>
+
+	<yellow1 id="june23" href="#"></yellow1>
+
+	<yellow2 id="june24" href="#"></yellow2>
+
+	<yellow3 id="june25" href="#"></yellow3>
+
+	<yellow4 id="june26" href="#"></yellow4>		
+	
+	<green1 id="july8" href="#"></green1>
+
+	<green2 id="july9" href="#"></green2>
+
+	<green3 id="july10" href="#"></green3>
+
+	<red1 id="august5" href="#"></red1>
+
+	<red2 id="august6" href="#"></red2>
+
+	<red3 id="august7" href="#"></red3>
+
+	<red4 id="august8" href="#"></red4>
+
+	<red5 id="august9" href="#"></red5>
+
+	<red6 id="august10" href="#"></red6>
+
+	<red7 id="august11" href="#"></red7>
+
+	<red8 id="august12" href="#"></red8>
+
+	<red9 id="august13" href="#"></red9>
+
+	<red10 id="august14" href="#"></red10>
+
+	<red11 id="august15" href="#"></red11>
+
+	<red12 id="august16" href="#"></red12>
+
+	<red13 id="august17" href="#"></red13>
+
+	<red14 id="august18" href="#"></red14>
+
+	<red15 id="august19" href="#"></red15>
+
+	<red16 id="august20" href="#"></red16>
+
+	<red17 id="august21" href="#"></red17>
+
+	</body>
+
+
+
+<script type="text/javascript">
+
+		var dataset = [250,250,250,250,250,250,250,250,250,250]; // initial dataset : dictates blue circle's sizes when page is loaded
+
+		var delay = 200; // adjust this for the delay of animation that will happen after clicking on button : not really necessary: units in milliseconds
+		var time = 200; // adjust this to change speed of animation: units in milliseconds
+
+		var rScale = d3.scale.linear()
+						.domain([0, d3.max(dataset, function(d) {return d; })])
+						.range([0, 250]); // 1 = smallest circle and 200 = largest
+		// drawing the initial sizes of the blue circles when page is loaded. there is no need to change anything here
+
+		d3.select("#one")
+			.style("width", rScale(dataset[0]) + "px")
+			.style("height", rScale(dataset[0]) + "px");
+		
+		d3.select("#two")
+			.style("width", rScale(dataset[1]) + "px")
+			.style("height", rScale(dataset[1]) + "px");
+
+		d3.select("#three")
+			.style("width", rScale(dataset[2]) + "px")
+			.style("height", rScale(dataset[2]) + "px");
+
+		d3.select("#four")
+			.style("width", rScale(dataset[3]) + "px")
+			.style("height", rScale(dataset[3]) + "px");
+
+		d3.select("#five")
+			.style("width", rScale(dataset[4]) + "px")
+			.style("height", rScale(dataset[4]) + "px");
+		
+		d3.select("#six")
+			.style("width", rScale(dataset[5]) + "px")
+			.style("height", rScale(dataset[5]) + "px");
+
+		d3.select("#seven")
+			.style("width", rScale(dataset[6]) + "px")
+			.style("height", rScale(dataset[6]) + "px");
+
+		d3.select("#eight")
+			.style("width", rScale(dataset[7]) + "px")
+			.style("height", rScale(dataset[7]) + "px");
+
+		d3.select("#nine")
+			.style("width", rScale(dataset[8]) + "px")
+			.style("height", rScale(dataset[8]) + "px");	
+
+		d3.select("#ten")
+			.style("width", rScale(dataset[9]) + "px")
+			.style("height", rScale(dataset[9]) + "px");					
+		// changing the blue circle's sizes once any of the buttons are clicked on
+ 		
+ 	d3.select("#nodate") // make sure the ID matches that of the button that will be clicked on       	
+			.on("click", function() {
+				
+				document.getElementById("one").style.opacity = "1";	
+
+				document.getElementById("two").style.opacity = "1";
+
+				document.getElementById("three").style.opacity = "1";	
+
+				document.getElementById("four").style.opacity = "1";
+				
+				document.getElementById("five").style.opacity = "1";	
+
+				document.getElementById("six").style.opacity = "1";
+
+				document.getElementById("seven").style.opacity = "1";	
+
+				document.getElementById("eight").style.opacity = "1";
+				
+				document.getElementById("nine").style.opacity = "1";	
+
+				document.getElementById("ten").style.opacity = "1";
+
+				dataset = [0,0,0,0,0,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+		});
+		
+		d3.select("#june3") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				document.getElementById("one").style.opacity = "1";	
+
+				document.getElementById("two").style.opacity = "1";
+
+				document.getElementById("three").style.opacity = "1";	
+
+				document.getElementById("four").style.opacity = "1";
+				
+				document.getElementById("five").style.opacity = "1";	
+
+				document.getElementById("six").style.opacity = "1";
+
+				document.getElementById("seven").style.opacity = "1";	
+
+				document.getElementById("eight").style.opacity = "1";
+				
+				document.getElementById("nine").style.opacity = "1";	
+
+				document.getElementById("ten").style.opacity = "1";	
+
+				dataset = [0,0,0,0,2.5,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+			
+				// tooltip code start
+				document.getElementById("tooltip").innerHTML = "JUNE 3 - MEN'S NATIONAL CHAMPIONSHIPS DAY 1";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: -11px;");					
+		});
+		
+		d3.select("#june4") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [0,0,0,0,2.5,0,0,2.5,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+
+				// tooltip code start
+				document.getElementById("tooltip").innerHTML = "JUNE 4 - WOMEN'S NATIONAL QUALIFIER";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1px;");
+		});
+		
+		d3.select("#june5") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [0,0,0,0,2.5,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+
+				// tooltip code start
+				document.getElementById("tooltip").innerHTML = "JUNE 5 - MIKULAK WINS FOURTH-STRAIGHT NATIONAL TITLE";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 13px;");
+				
+		});
+
+		d3.select("#june23") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [0,0,0,0,2.5,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+	
+				// tooltip code start
+				document.getElementById("tooltip").innerHTML = "JUNE 23 - MEN'S OLYMPIC TRIALS DAY 1";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 289px;");										
+		});		
+	
+		d3.select("#june24") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [7.5,2.5,12.5,2.5,12.5,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+				
+				document.getElementById("tooltip").innerHTML = "JUNE 24 - WOMEN'S NATIONAL CHAMPIONSHIPS DAY 1";			
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 301px;");
+		});		
+		
+		d3.select("#june25") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [2.5,0,5,0,5,2.5,2.5,5,2.5,5]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+				
+				document.getElementById("tooltip").innerHTML = "JUNE 25 - MEN'S OLYMPIC TEAM NAMED";	
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 313px;");					
+		});	
+		
+		d3.select("#june26") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [12.5,5,27.5,5,17.5,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+				
+				document.getElementById("tooltip").innerHTML = "JUNE 26 - BILES WINS FOURTH-STRAIGHT NATIONAL TITLE";	
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 325px;");								
+		});	
+
+		d3.select("#july8") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [17.5,10,20,7.5,27.5,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+				
+				document.getElementById("tooltip").innerHTML = "JULY 8 - WOMEN'S OLYMPIC TRIALS DAY 1";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 509px;");						
+		});	
+		
+		d3.select("#july9") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [5,5,5,0,7.5,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+				
+				document.getElementById("tooltip").innerHTML = "JULY 9 - NO COMPETITION";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 521px;");						
+		});	
+
+		d3.select("#july10") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [35,22.5,37.5,22.5,60,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+				
+				document.getElementById("tooltip").innerHTML = "JULY 10 - WOMEN'S OLYMPIC TEAM NAMED";	
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 533px;");						
+		});	
+
+		d3.select("#august5") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [7.5,5,27.5,2.5,12.5,0,0,1,0,1]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+				
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");
+				
+				document.getElementById("tooltip").innerHTML = "AUGUST 5 - OPENING CEREMONY OF 2016 OLYMPIC GAMES";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 933px;");						
+		});
+
+		d3.select("#august6") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [15,10,47.5,5,32.5,2.5,5,12.5,5,7.5]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+				
+				document.getElementById("tooltip").innerHTML = "AUGUST 6 - MEN'S TEAM QUALIFIES IN 2ND";	
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 945px;");					
+		});
+
+		d3.select("#august7") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [115,37.5,112.5,15,90,2.5,0,5,2.5,2.5]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+				
+				document.getElementById("tooltip").innerHTML = "AUGUST 7 - WOMEN'S TEAM DOMINATES QUALIFICATION, LEADS EVERY EVENT";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 957px;");						
+		});
+
+		d3.select("#august8") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [42.5,12.5,65,5,25,2.5,2.5,7.5,2.5,5]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+				
+				document.getElementById("tooltip").innerHTML = "AUGUST 8 - AMERICANS FALTER, FINISH 5TH IN MEN'S TEAM FINAL";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 969px;");		
+		});
+
+		d3.select("#august9") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [142.5,65,147.5,32.5,97.5,0,0,2.5,0,2.5]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+				
+				document.getElementById("tooltip").innerHTML = "AUGUST 9 - US WOMEN BLOW PAST COMPETITION FOR TEAM GOLD";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 981px;");				
+		});
+
+		d3.select("#august10") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [55,17.5,92.5,5,40,2.5,0,7.5,0,2.5]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					
+					document.getElementById("tooltip").innerHTML = "AUGUST 10 - MIKULAK FINISHES 7TH IN MEN'S ALL-AROUND, BROOKS 14TH";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 993px;");						
+		});
+
+
+		d3.select("#august11") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [197.5,15,250,5,75,0,0,2.5,0,2.5]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					
+					document.getElementById("tooltip").innerHTML = "AUGUST 11 - BILES, RAISMAN GO 1-2 IN WOMEN'S ALL-AROUND";	
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1005px;");						
+		});
+
+		d3.select("#august12") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [62.5,7.5,82.5,2.5,32.5,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					
+					document.getElementById("tooltip").innerHTML = "AUGUST 12 - NO COMPETITION";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1017px;");								
+		});
+
+		d3.select("#august13") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [35,7.5,75,5,30,0,5,2.5,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					
+					document.getElementById("tooltip").innerHTML = "AUGUST 13 - NO COMPETITION";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1029px;");						
+		});
+
+		d3.select("#august14") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [32.5,15,112.5,15,72.5,0,2.5,2.5,0,2.5]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					
+					document.getElementById("tooltip").innerHTML = "AUGUST 14 - BILES WINS VAULT FOR 3RD GOLD, KOCIAN CLAIMS SILVER ON BARS, NADDOUR CAPTURES POMMEL HORSE BRONZE";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1041px;");							
+		});
+
+		d3.select("#august15") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [32.5,30,110,5,32.5,0,0,2.5,2.5,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					
+					document.getElementById("tooltip").innerHTML = "AUGUST 15 - HERNANDEZ WINS SILVER ON BALANCE BEAM, BILES BRONZE";	
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1053px;");							
+		});
+
+		d3.select("#august16") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [82.5,12.5,145,5,30,0,0,2.5,7.5,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					
+					document.getElementById("tooltip").innerHTML = "AUGUST 16 - GYMNASTICS CONCLUDES AS BILES, RASMAN GO 1-2 ON FLOOR, LEYVA CAPTURES SILVER ON TWO EVENTS";	
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1065px;");						
+		});
+
+		d3.select("#august17") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [22.5,5,50,2.5,17.5,0,0,0,2.5,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					
+					document.getElementById("tooltip").innerHTML = "AUGUST 17 - NO COMPETITION";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1077px;");								
+		});
+
+		d3.select("#august18") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [15,2.5,32.5,2.5,15,0,0,0,2.5,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					document.getElementById("tooltip").innerHTML = "AUGUST 18 - NO COMPETITION";	
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1089px;");						
+		});
+
+		d3.select("#august19") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [12.5,2.5,30,2.5,10,0,0,0,2.5,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					
+					document.getElementById("tooltip").innerHTML = "AUGUST 19 - NO COMPETITION";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1101px;");							
+		});
+
+		d3.select("#august20") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [20,5,32.5,2.5,10,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					
+					document.getElementById("tooltip").innerHTML = "AUGUST 20 - NO COMPETITION";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1113px;");									
+		});
+
+		d3.select("#august21") // make sure the ID matches that of the button that will be clicked on
+			.on("click", function() {
+
+				dataset = [30,2.5,32.5,2.5,12.5,0,0,0,0,0]; // Change these values: sizes of cirlces once button "data 1" is clicked
+
+				d3.select("#one") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[0]) + "px")
+					.style("height", rScale(dataset[0]) + "px");
+		
+				d3.select("#two") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[1]) + "px")
+					.style("height", rScale(dataset[1]) + "px");
+
+				d3.select("#three") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[2]) + "px")
+					.style("height", rScale(dataset[2]) + "px");
+
+				d3.select("#four") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[3]) + "px")
+					.style("height", rScale(dataset[3]) + "px");
+
+				d3.select("#five") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[4]) + "px")
+					.style("height", rScale(dataset[4]) + "px");
+				
+				d3.select("#six") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[5]) + "px")
+					.style("height", rScale(dataset[5]) + "px");
+
+				d3.select("#seven") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[6]) + "px")
+					.style("height", rScale(dataset[6]) + "px");
+				
+				d3.select("#eight") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[7]) + "px")
+					.style("height", rScale(dataset[7]) + "px");
+
+				d3.select("#nine") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[8]) + "px")
+					.style("height", rScale(dataset[8]) + "px");
+
+				d3.select("#ten") // no need to touch anything here
+					.transition()
+					.delay(delay)
+					.duration(time)
+					.ease("linear")
+					.style("width", rScale(dataset[9]) + "px")
+					.style("height", rScale(dataset[9]) + "px");					
+					
+					document.getElementById("tooltip").innerHTML = "AUGUST 21 - CLOSING CEREMONY OF 2016 OLYMPIC GAMES";
+				document.getElementById("tooltip").setAttribute("style", "margin-left: 1125px;");							
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+
+</html>
